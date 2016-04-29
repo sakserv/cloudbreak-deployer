@@ -92,8 +92,10 @@ cbd-update-release() {
 
         local url=https://github.com/sequenceiq/cloudbreak-deployer/releases/download/v${lastver}/cloudbreak-deployer_${lastver}_${osarch}.tgz
         info "Updating $SELF_EXECUTABLE from url: $url"
+        mkdir -p $TEMP_DIR
         curl -Ls $url | tar -zx -C $TEMP_DIR
         mv $TEMP_DIR/cbd $SELF_EXECUTABLE
+        rm -rf $TEMP_DIR
         debug $SELF_EXECUTABLE is updated
     else
         debug you have the latest version | green
@@ -106,8 +108,10 @@ cbd-update-snap() {
 
     url=$(cci-latest sequenceiq/cloudbreak-deployer $branch)
     info "Update $SELF_EXECUTABLE from: $url"
+    mkdir -p $TEMP_DIR
     curl -Ls $url | tar -zx -C $TEMP_DIR
     mv $TEMP_DIR/cbd $SELF_EXECUTABLE
+    rm -rf $TEMP_DIR
     debug $SELF_EXECUTABLE is updated
 }
 
